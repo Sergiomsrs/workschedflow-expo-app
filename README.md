@@ -16,3 +16,9 @@ Esta aplicación móvil complementa la plataforma web para proporcionar movilida
 * **Lenguaje**: [TypeScript](https://www.typescriptlang.org/) para un desarrollo con tipado fuerte y seguro.
 * **Estilos**: [NativeWind](https://www.nativewind.dev/) para una implementación de Tailwind CSS en entornos nativos.
 * **Arquitectura**: Separación de capas (Infrastructure, Utils, UI) para facilitar el mantenimiento.
+
+## 🌐 Ecosistema Web
+
+Puedes visitar la versión web y la landing page oficial del proyecto para conocer más sobre la gestión de equipos:
+
+🔗 [WORKSCHEDFLOW Web Interface](https://sergiomsrs.github.io/wsf-landing/)
