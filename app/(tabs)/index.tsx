@@ -1,98 +1,89 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useTimeTrack } from '@/hooks/useTimeTrack';
+import { useState } from 'react';
+import { Pressable, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  const safeArea = useSafeAreaInsets()
+
+  const { addTimetrack } = useTimeTrack()
+
+  const [form, setForm] = useState({
+    dni: '',
+    password: ''
+  })
+
+
+  const onSubmit = () => {
+    addTimetrack.mutate({
+      dni: form.dni,
+      password: form.password
+    })
+  }
+
+
+  return (
+    <SafeAreaView>
+
+      <View className="w-full max-w-md self-center">
+
+        <View className="items-center mb-12">
+          <Text className="text-5xl font-extrabold tracking-tight text-indigo-600">
+            WSF
+          </Text>
+          <Text className="mt-2 text-base text-neutral-500">
+            WorkSchedFlow
+          </Text>
+        </View>
+
+        <View className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200">
+
+          <Text className="text-xl font-semibold text-neutral-900 mb-6">
+            Accede a tu jornada
+          </Text>
+
+          <View className="mb-5">
+            <Text className="text-sm font-medium text-neutral-700">
+              DNI
+            </Text>
+            <TextInput
+              placeholder="Introduce tu DNI"
+              placeholderTextColor="#9ca3af"
+              className="mt-2 border border-neutral-300 rounded-lg px-4 py-3 text-base bg-neutral-50"
+              onChangeText={(text) => setForm({ ...form, dni: text })}
+            />
+          </View>
+
+          <View className="mb-6">
+            <Text className="text-sm font-medium text-neutral-700">
+              Contraseña
+            </Text>
+            <TextInput
+              placeholder="Introduce tu contraseña"
+              placeholderTextColor="#9ca3af"
+              secureTextEntry
+              className="mt-2 border border-neutral-300 rounded-lg px-4 py-3 text-base bg-neutral-50"
+              onChangeText={(text) => setForm({ ...form, password: text })}
+            />
+          </View>
+
+          <Pressable
+            className="bg-indigo-600 rounded-xl py-4 items-center active:opacity-80"
+            onPress={onSubmit}
+            disabled={addTimetrack.isPending}
+          >
+            <Text className="text-white font-semibold text-base">
+              {addTimetrack.isPending ? "Fichando..." : "Iniciar sesión"}
+            </Text>
+          </Pressable>
+
+        </View>
+      </View>
+    </SafeAreaView>
+
   );
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+
