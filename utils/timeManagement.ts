@@ -1,4 +1,6 @@
-export const processTimeStamps = (dailySchedules: any[], id: any): any[] => {
+import { SchedulesResponse } from "@/infrastructure/interfaces/schedules.response";
+
+export const processTimeStamps = (dailySchedules: SchedulesResponse, id: any): any[] => {
     if (!Array.isArray(dailySchedules)) return [];
     return dailySchedules.map((dayData: any) => {
         const day = new Date(dayData.date).toLocaleDateString('es-ES');
