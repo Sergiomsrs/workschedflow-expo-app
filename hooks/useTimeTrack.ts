@@ -7,7 +7,7 @@ export const useTimeTrack = () => {
 
     const addTimetrack = useMutation({
         mutationFn: async (payload: FicharPayload) => {
-            const { data } = await timeTrackApi.post('/api/timestamp/fichar', payload)
+            const { data } = await timeTrackApi.post('/timestamp/fichar', payload)
             return data
         },
         onSuccess: (data) => {

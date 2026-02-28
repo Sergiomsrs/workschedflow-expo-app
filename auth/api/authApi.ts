@@ -1,3 +1,5 @@
+
+
 import axios from 'axios';
 import { Platform } from 'react-native';
 
@@ -13,7 +15,8 @@ export const API_URL =
 
 console.log({ STAGE, [Platform.OS]: API_URL })
 
-export const timeTrackApi = axios.create({
-    baseURL: API_URL,
-    timeout: 5000,
+
+
+export const authApi = axios.create({
+    baseURL: API_URL
 })

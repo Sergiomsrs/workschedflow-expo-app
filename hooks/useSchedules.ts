@@ -2,10 +2,6 @@ import { schedulesAction } from "@/infrastructure/actions/schedules.actions";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 
-
-
-
-
 export const useSchedules = (id: number, startDate: string, endDate: string) => {
     const queryClient = useQueryClient();
 
