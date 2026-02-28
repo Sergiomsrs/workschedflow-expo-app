@@ -7,6 +7,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 
 export const useSchedules = (id: number, startDate: string, endDate: string) => {
+    const queryClient = useQueryClient();
 
     const monthSchedules = useQuery({
         queryKey: ['schedules', { id, startDate, endDate }],
@@ -14,25 +15,17 @@ export const useSchedules = (id: number, startDate: string, endDate: string) => 
         staleTime: 1000 * 60 * 60 * 24, // 24horas
     });
 
-
-
-
-    return {
-        monthSchedules
-    }
-}
-
-// Hook para precargar meses anteriores y siguientes
-export const usePrefetchSchedules = (id: number) => {
-    const queryClient = useQueryClient();
-
-    const prefetchMonth = async (startDate: string, endDate: string) => {
+    // Función integrada para prefetch de meses
+    const prefetchMonth = async (prefetchStartDate: string, prefetchEndDate: string) => {
         await queryClient.prefetchQuery({
-            queryKey: ['schedules', { id, startDate, endDate }],
-            queryFn: () => schedulesAction(id, startDate, endDate),
+            queryKey: ['schedules', { id, startDate: prefetchStartDate, endDate: prefetchEndDate }],
+            queryFn: () => schedulesAction(id, prefetchStartDate, prefetchEndDate),
             staleTime: 1000 * 60 * 60 * 24,
         });
     };
 
-    return { prefetchMonth };
-};
+    return {
+        monthSchedules,
+        prefetchMonth
+    }
+}

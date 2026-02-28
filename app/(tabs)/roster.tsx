@@ -1,6 +1,5 @@
 import RosterMonthView from '@/components/roster/RosterMonthView'
-import { timestampSchedulesMock } from '@/data/mocks/schedules'
-import { usePrefetchSchedules, useSchedules } from '@/hooks/useSchedules'
+import { useSchedules } from '@/hooks/useSchedules'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { processTimeStamps } from '../../utils/timeManagement'
@@ -15,7 +14,7 @@ const roster = () => {
         endDate: '2026-02-28'
     })
 
-    const { prefetchMonth } = usePrefetchSchedules(inputs.id)
+    const { monthSchedules, prefetchMonth } = useSchedules(inputs.id, inputs.startDate, inputs.endDate)
 
     // Función para calcular rango de fechas del mes
     const getMonthDateRange = (date: Date) => {
@@ -62,7 +61,6 @@ const roster = () => {
         setTimeout(() => setisRefreshing(false), 1000)
     }
 
-    const { monthSchedules } = useSchedules(inputs.id, inputs.startDate, inputs.endDate)
     const horarios = monthSchedules.data ? processTimeStamps(monthSchedules.data, 1) : []
 
     return (
