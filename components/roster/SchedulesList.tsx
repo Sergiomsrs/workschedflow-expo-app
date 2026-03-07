@@ -45,8 +45,8 @@ const SchedulesList = ({ processedRecords }: Props) => {
                             {/* Contenedor de Horarios */}
                             <View
                                 className={`flex-1 ml-3 p-3 rounded-xl border ${isDayOff
-                                        ? 'bg-slate-50 border-slate-200'
-                                        : 'bg-white border-slate-200 shadow-sm'
+                                    ? 'bg-slate-50 border-slate-200'
+                                    : 'bg-white border-slate-200 shadow-sm'
                                     }`}
                                 style={!isDayOff ? { elevation: 1 } : {}}
                             >

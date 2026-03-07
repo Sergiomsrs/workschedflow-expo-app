@@ -95,13 +95,7 @@ const RosterMonthView: React.FC<RosterMonthViewProps> = ({
                 style={{ flex: 1 }}
             >
                 {/* Header mejorado */}
-                <View className='bg-gradient-to-b from-slate-800 to-slate-700 pt-6 pb-5 px-4 shadow-lg'>
-                    {/* Título superior */}
-                    <View className='mb-5'>
-                        <Text className='text-slate-300 text-xs font-medium uppercase tracking-wider'>
-                            📅 Mi Jornada
-                        </Text>
-                    </View>
+                <View className='bg-gradient-to-b from-slate-800 to-slate-700 px-4 shadow-lg'>
 
                     {/* Navegación de meses */}
                     <View
@@ -133,11 +127,13 @@ const RosterMonthView: React.FC<RosterMonthViewProps> = ({
                             <Text className='text-white text-center text-lg font-bold capitalize'>
                                 {monthName}
                             </Text>
-                            {!isCurrentMonth && (
-                                <Text className='text-blue-200 text-center text-xs mt-1 font-medium'>
-                                    Toca para hoy
-                                </Text>
-                            )}
+                            <Text className='text-white text-center text-lg font-bold capitalize'>
+                                {!isCurrentMonth ?
+                                    <Text className='text-blue-200 text-center text-xs mt-1 font-medium'>
+                                        Toca para hoy
+                                    </Text> : <Text className='text-blue-200 text-center text-xs mt-1 font-medium' > Mes Actual </Text>}
+                            </Text>
+
                         </TouchableOpacity>
 
                         {/* Botón siguiente */}
@@ -150,18 +146,9 @@ const RosterMonthView: React.FC<RosterMonthViewProps> = ({
                             <Ionicons
                                 name="chevron-forward"
                                 size={24}
-                                color={canGoNext ? "#93c5fd" : "#64748b"}
+                                color="#93c5fd"
                             />
                         </TouchableOpacity>
-                    </View>
-
-                    {/* Indicador visual */}
-                    <View className='mt-4 flex-row items-center justify-center'>
-                        <View className='h-1 bg-slate-600 rounded-full flex-1' />
-                        <Text className='text-slate-400 text-xs mx-3 font-medium'>
-                            {isCurrentMonth ? '✓ Mes actual' : 'Mes anterior'}
-                        </Text>
-                        <View className='h-1 bg-slate-600 rounded-full flex-1' />
                     </View>
                 </View>
 

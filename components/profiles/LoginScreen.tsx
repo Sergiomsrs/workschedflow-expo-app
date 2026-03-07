@@ -1,10 +1,9 @@
 import { useAuthStore } from '@/auth/store/useAuthStore';
-import { Redirect } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, ImageBackground, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 
-const LoginScreen = () => {
+export const LoginScreen = () => {
 
   const { login, checkStatus, status } = useAuthStore();
   const [dni, setDni] = useState('');
@@ -77,20 +76,6 @@ const LoginScreen = () => {
     <ScrollView className="flex-1 bg-white">
 
       {/* Header con imagen de fondo */}
-      <ImageBackground
-        source={require("../../assets/images/bg-image-loginForm.webp")}
-        resizeMode="cover"
-        className="w-full h-56 justify-end"
-      >
-        <View className="absolute inset-0 bg-gradient-to-b from-blue-900/90 to-blue-800/80" />
-
-        <View className="pb-8 items-center px-6">
-          <Text className="text-white text-3xl font-bold">
-            WORK<Text className="text-blue-300">SCHEDFLOW</Text>
-          </Text>
-          <Text className="text-blue-100 text-sm mt-2">Mi Jornada Laboral</Text>
-        </View>
-      </ImageBackground>
 
       {/* Contenido principal */}
       <View className="px-6 pt-8 pb-12">
@@ -242,6 +227,3 @@ const LoginScreen = () => {
     </ScrollView>
   )
 }
-
-
-export default LoginScreen
