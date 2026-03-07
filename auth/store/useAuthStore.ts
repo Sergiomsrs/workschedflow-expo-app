@@ -1,6 +1,7 @@
+import { create } from 'zustand';
 import { authLogin, getMe } from "../actions/auth-actions";
 import { MeResponse } from "../interfaces/me.response";
-import { create } from 'zustand';
+import { Redirect } from 'expo-router';
 
 
 export type AuthStatus = 'authenticated' | 'unAuthenticatd' | 'checking';

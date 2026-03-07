@@ -1,7 +1,7 @@
 import { ProcessedRecord } from '@/infrastructure/interfaces/processed.record.interface'
 import { Ionicons } from '@expo/vector-icons'
 import React, { useRef, useState } from 'react'
-import { Animated, PanResponder, RefreshControl, ScrollView as RNScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { Animated, Dimensions, RefreshControl, ScrollView as RNScrollView, Text, TouchableOpacity, View } from 'react-native'
 import SchedulesList from './SchedulesList'
 
 interface RosterMonthViewProps {
@@ -21,132 +21,155 @@ const RosterMonthView: React.FC<RosterMonthViewProps> = ({
     isLoading,
     onRefresh
 }) => {
+    const screenWidth = Dimensions.get('window').width
     const [startX, setStartX] = useState(0)
     const fadeAnim = useRef(new Animated.Value(1)).current
-    const panResponder = useRef(
-        PanResponder.create({
-            onStartShouldSetPanResponder: () => true,
-            onMoveShouldSetPanResponder: () => true,
-            onPanResponderGrant: (evt) => {
-                setStartX(evt.nativeEvent.pageX)
-            },
-            onPanResponderRelease: (evt) => {
-                const endX = evt.nativeEvent.pageX
-                const diff = startX - endX
-
-                if (Math.abs(diff) > 50) {
-                    if (diff > 0) {
-                        // Swipe izquierda → próximo mes
-                        goToNextMonth()
-                        onSwipe('left')
-                    } else {
-                        // Swipe derecha → mes anterior
-                        goToPreviousMonth()
-                        onSwipe('right')
-                    }
-                }
-            }
-        })
-    ).current
+    const scaleAnim = useRef(new Animated.Value(1)).current
 
     const monthName = currentDate.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })
-    const isCurrentMonth = new Date().getMonth() === currentDate.getMonth() && new Date().getFullYear() === currentDate.getFullYear()
+    const yearNumber = currentDate.getFullYear()
+    const monthNumber = currentDate.getMonth()
+    const isCurrentMonth = new Date().getMonth() === monthNumber && new Date().getFullYear() === yearNumber
+    const canGoNext = !isCurrentMonth || monthNumber < new Date().getMonth() || yearNumber < new Date().getFullYear()
 
     const goToPreviousMonth = () => {
-        const prevDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
+        const prevDate = new Date(yearNumber, monthNumber - 1, 1)
         onMonthChange(prevDate)
-        triggerFadeAnimation()
+        triggerTransitionAnimation()
+        onSwipe('right')
     }
 
     const goToNextMonth = () => {
-        const nextDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
+        const nextDate = new Date(yearNumber, monthNumber + 1, 1)
         onMonthChange(nextDate)
-        triggerFadeAnimation()
+        triggerTransitionAnimation()
+        onSwipe('left')
     }
 
     const goToCurrentMonth = () => {
         if (!isCurrentMonth) {
             onMonthChange(new Date())
-            triggerFadeAnimation()
+            triggerTransitionAnimation()
         }
     }
 
-    const triggerFadeAnimation = () => {
-        fadeAnim.setValue(0.5)
-        Animated.timing(fadeAnim, {
-            toValue: 1,
-            duration: 300,
-            useNativeDriver: true,
-        }).start()
+    const triggerTransitionAnimation = () => {
+        scaleAnim.setValue(0.95)
+        fadeAnim.setValue(0.6)
+        Animated.parallel([
+            Animated.timing(scaleAnim, {
+                toValue: 1,
+                duration: 250,
+                useNativeDriver: true,
+            }),
+            Animated.timing(fadeAnim, {
+                toValue: 1,
+                duration: 250,
+                useNativeDriver: true,
+            })
+        ]).start()
     }
 
-    const handlePanResponderRelease = (endX: number) => {
+    const handleTouchStart = (e: any) => {
+        setStartX(e.nativeEvent.pageX)
+    }
+
+    const handleTouchEnd = (e: any) => {
+        const endX = e.nativeEvent.pageX
         const diff = startX - endX
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) {
-                // Swipe izquierda → próximo mes
+
+        if (Math.abs(diff) > screenWidth * 0.15) {
+            if (diff > 0 && canGoNext) {
                 goToNextMonth()
-                onSwipe('left')
-            } else {
-                // Swipe derecha → mes anterior
+            } else if (diff < 0) {
                 goToPreviousMonth()
-                onSwipe('right')
             }
         }
     }
 
     return (
-        <View
-            {...panResponder.panHandlers}
-            style={{ flex: 1 }}
-        >
+        <View style={{ flex: 1 }}>
             <RNScrollView
                 scrollEnabled={true}
                 refreshControl={<RefreshControl refreshing={isLoading} onRefresh={onRefresh} />}
                 style={{ flex: 1 }}
             >
-                {/* Header con DatePicker integrado */}
-                <View className='bg-gradient-to-b from-slate-800 to-slate-900 pt-4 pb-6 px-4'>
-                    <View className='flex-row items-center justify-between mb-4'>
+                {/* Header mejorado */}
+                <View className='bg-gradient-to-b from-slate-800 to-slate-700 pt-6 pb-5 px-4 shadow-lg'>
+                    {/* Título superior */}
+                    <View className='mb-5'>
+                        <Text className='text-slate-300 text-xs font-medium uppercase tracking-wider'>
+                            📅 Mi Jornada
+                        </Text>
+                    </View>
+
+                    {/* Navegación de meses */}
+                    <View
+                        className='flex-row items-center justify-between gap-3'
+                        onTouchStart={handleTouchStart}
+                        onTouchEnd={handleTouchEnd}
+                    >
                         {/* Botón anterior */}
                         <TouchableOpacity
                             onPress={goToPreviousMonth}
-                            className='p-2 rounded-lg active:bg-slate-700'
+                            activeOpacity={0.7}
+                            className='p-2 rounded-full bg-slate-600/50 active:bg-slate-600'
+                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                         >
-                            <Ionicons name="chevron-back" size={28} color="#60a5fa" />
+                            <Ionicons name="chevron-back" size={24} color="#93c5fd" />
                         </TouchableOpacity>
 
-                        {/* Mes y año - Botón "Hoy" */}
+                        {/* Mes - Centro */}
                         <TouchableOpacity
                             onPress={goToCurrentMonth}
                             disabled={isCurrentMonth}
-                            className={`flex-1 mx-4 py-2 px-4 rounded-xl ${isCurrentMonth ? 'bg-blue-600' : 'bg-slate-700 active:bg-slate-600'
+                            activeOpacity={0.7}
+                            className={`flex-1 py-3 px-4 rounded-2xl ${isCurrentMonth
+                                ? 'bg-indigo-600/40 active:bg-slate-600/60'
+                                : 'bg-slate-600/40 active:bg-slate-600/60'
                                 }`}
+                            hitSlop={{ top: 8, bottom: 8, left: 0, right: 0 }}
                         >
-                            <Text className='text-white text-center text-base font-semibold capitalize'>
+                            <Text className='text-white text-center text-lg font-bold capitalize'>
                                 {monthName}
                             </Text>
+                            {!isCurrentMonth && (
+                                <Text className='text-blue-200 text-center text-xs mt-1 font-medium'>
+                                    Toca para hoy
+                                </Text>
+                            )}
                         </TouchableOpacity>
 
                         {/* Botón siguiente */}
                         <TouchableOpacity
                             onPress={goToNextMonth}
-                            className='p-2 rounded-lg active:bg-slate-700'
+                            activeOpacity={0.7}
+                            className='p-2 rounded-full bg-slate-600/50 active:bg-slate-600'
+                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                         >
-                            <Ionicons name="chevron-forward" size={28} color="#60a5fa" />
+                            <Ionicons
+                                name="chevron-forward"
+                                size={24}
+                                color={canGoNext ? "#93c5fd" : "#64748b"}
+                            />
                         </TouchableOpacity>
                     </View>
 
-                    {/* Indicador de swipe */}
-                    <View className='flex-row items-center justify-center gap-1'>
-                        <Ionicons name="hand-left" size={16} color="#94a3b8" />
-                        <Text className='text-slate-400 text-xs'>Desliza para cambiar mes</Text>
-                        <Ionicons name="hand-right" size={16} color="#94a3b8" />
+                    {/* Indicador visual */}
+                    <View className='mt-4 flex-row items-center justify-center'>
+                        <View className='h-1 bg-slate-600 rounded-full flex-1' />
+                        <Text className='text-slate-400 text-xs mx-3 font-medium'>
+                            {isCurrentMonth ? '✓ Mes actual' : 'Mes anterior'}
+                        </Text>
+                        <View className='h-1 bg-slate-600 rounded-full flex-1' />
                     </View>
                 </View>
 
                 {/* Contenido con animación */}
-                <Animated.View style={{ opacity: fadeAnim }}>
+                <Animated.View style={{
+                    opacity: fadeAnim,
+                    transform: [{ scale: scaleAnim }]
+                }}>
                     <SchedulesList processedRecords={processedRecords} />
                 </Animated.View>
             </RNScrollView>
