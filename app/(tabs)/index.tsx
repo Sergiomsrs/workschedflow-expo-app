@@ -29,14 +29,6 @@ export default function HomeScreen() {
 
       <View className="w-full max-w-md self-center">
 
-        <View className="items-center mb-12">
-          <Text className="text-5xl font-extrabold tracking-tight text-indigo-600">
-            WSF
-          </Text>
-          <Text className="mt-2 text-base text-neutral-500">
-            WorkSchedFlow
-          </Text>
-        </View>
 
         <View className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200">
 
