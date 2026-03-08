@@ -12,7 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
-  const { status, checkStatus } = useAuthStore();
+  const { status, user } = useAuthStore();
 
 
 
@@ -43,7 +43,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="profile"
           options={{
-            title: status == 'authenticated' ? 'User' : 'Login',
+            title: status == 'authenticated' ? user?.name : 'Login',
             tabBarIcon: ({ color }) => status == 'authenticated' ? <Ionicons size={28} name="person-circle-outline" color={color} /> : <Ionicons size={28} name="log-in" color={color} />,
           }}
         />

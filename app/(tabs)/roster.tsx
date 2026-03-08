@@ -3,6 +3,7 @@ import { useSchedules } from '@/hooks/useSchedules'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { processTimeStamps } from '../../utils/timeManagement'
+import { useAuthStore } from '@/auth/store/useAuthStore'
 
 
 const roster = () => {
@@ -14,7 +15,11 @@ const roster = () => {
         endDate: '2026-02-28'
     })
 
-    const { monthSchedules, prefetchMonth } = useSchedules(inputs.id, inputs.startDate, inputs.endDate)
+    const { user } = useAuthStore();
+
+    const userId = user?.id || inputs.id;
+
+    const { monthSchedules, prefetchMonth } = useSchedules(userId, inputs.startDate, inputs.endDate)
 
     // Función para calcular rango de fechas del mes
     const getMonthDateRange = (date: Date) => {

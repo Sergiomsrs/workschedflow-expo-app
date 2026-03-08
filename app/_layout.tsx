@@ -5,10 +5,10 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
-import "../global.css"
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useAuthStore } from '@/auth/store/useAuthStore';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import "../global.css";
 
 export const unstable_settings = {
   anchor: '(tabs)',

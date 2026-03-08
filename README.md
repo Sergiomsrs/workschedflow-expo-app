@@ -22,3 +22,32 @@ Esta aplicación móvil complementa la plataforma web para proporcionar movilida
 Puedes visitar la versión web y la landing page oficial del proyecto para conocer más sobre la gestión de equipos:
 
 🔗 [WORKSCHEDFLOW Web Interface](https://sergiomsrs.github.io/wsf-landing/)
+
+
+/app                # (Rutas/Expo Router) Solo definición de pantallas y layouts
+  index.tsx         # Login / Landing
+  (auth)/           # Grupo de rutas de autenticación
+  (user)/           # Grupo de rutas para empleados
+    _layout.tsx     # Protección de ruta y Tab Bar
+    home.tsx
+    profile.tsx
+  (admin)/          # Grupo de rutas para administradores
+    _layout.tsx
+    dashboard.tsx
+
+/src                # Todo el código fuente
+  /features         # Lógica agrupada por funcionalidad
+    /auth
+      /components
+      /hooks        # useAuth.ts
+      /services     # Llamadas a la API de auth
+      /store        # Tu useAuthStore.ts actual
+    /roster         # Tu lógica de turnos
+      /components   # RosterMonthView, SchedulesList...
+      /hooks
+      /interfaces   # processed.record.interface.ts
+      /services
+  /shared           # Lo que se usa en toda la app
+    /components     # Botones, Inputs, Spinners genéricos
+    /theme          # Colores, constantes de Tailwind
+    /utils          # Formateadores de fecha, etc.

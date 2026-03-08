@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/auth/store/useAuthStore';
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 
 export const LoginScreen = () => {
@@ -50,6 +50,7 @@ export const LoginScreen = () => {
   };
 
   return (
+
 
     <ScrollView className="flex-1 bg-white">
 
@@ -203,5 +204,6 @@ export const LoginScreen = () => {
 
       </View>
     </ScrollView>
+
   )
 }
