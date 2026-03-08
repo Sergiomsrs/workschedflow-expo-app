@@ -1,11 +1,18 @@
 
-import { LoginScreen } from '@/components/profiles/LoginScreen'
-import React from 'react'
+import { useAuthStore } from '@/auth/store/useAuthStore';
+import { LoginScreen } from '@/components/profiles/LoginScreen';
+import React from 'react';
+import UserSection from '../userSection/UserSection';
 
 const profile = () => {
+
+    const { status } = useAuthStore();
+
+
+
     return (
         <>
-            <LoginScreen />
+            {status == 'authenticated' ? <UserSection /> : <LoginScreen />}
         </>
     )
 }

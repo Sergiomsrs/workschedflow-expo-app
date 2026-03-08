@@ -1,39 +1,17 @@
 import { useAuthStore } from '@/auth/store/useAuthStore';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 
 export const LoginScreen = () => {
 
   const { login, checkStatus, status } = useAuthStore();
-  const [dni, setDni] = useState('');
-  const [password, setPassword] = useState('');
+  const [dni, setDni] = useState('1234');
+  const [password, setPassword] = useState('1234');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<{ dni?: string; password?: string }>({});
 
-
-
-  console.log('Estado de autenticación:', status);
-
-
-
-  useEffect(() => {
-    //login('1234', '1234');
-  }, []);
-
-  /*   if (status === 'checking') {
-      return (
-        <View className="flex-1 justify-center items-center bg-white">
-          <ActivityIndicator size="large" color="#3B82F6" />
-          <Text className="mt-4 text-gray-600">Verificando sesión...</Text>
-        </View>
-      );
-    }
-  
-    if (status === 'authenticated') {
-      return <Redirect href="/userSection/UserSection" />;
-    } */
 
   const validateForm = () => {
     const newErrors: { dni?: string; password?: string } = {};

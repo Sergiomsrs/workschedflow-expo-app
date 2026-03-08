@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { authLogin, getMe } from "../actions/auth-actions";
 import { MeResponse } from "../interfaces/me.response";
-import { Redirect } from 'expo-router';
 
 
 export type AuthStatus = 'authenticated' | 'unAuthenticatd' | 'checking';
@@ -13,11 +12,11 @@ export interface AuthState {
     user?: MeResponse;
 
     login: (dni: string, password: string) => Promise<boolean>;
-    checkStatus: () => Promise<void>;
+    checkStatus: () => Promise<boolean>;
     logout: () => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>()((set) => ({
+export const useAuthStore = create<AuthState>()((set, get) => ({
 
     status: 'checking',
     token: undefined,
@@ -46,6 +45,21 @@ export const useAuthStore = create<AuthState>()((set) => ({
 
     checkStatus: async () => {
 
+        const { token } = get(); // 👈 obtienes el token del estado
+
+        if (!token) {
+            set({ status: 'unAuthenticatd', user: undefined });
+            return false;
+        }
+
+        try {
+            const user = await getMe(token);
+            set({ status: 'authenticated', user });
+            return true;
+        } catch (error) {
+            set({ status: 'unAuthenticatd', user: undefined, token: undefined });
+            return false;
+        }
     },
 
     logout: async () => {
