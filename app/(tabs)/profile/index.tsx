@@ -1,8 +1,9 @@
 
+import LoginScreen from '@/app/userSection/LoginScreen';
+import UserSection from '@/app/userSection/UserSection';
 import { useAuthStore } from '@/src/auth/store/useAuthStore';
 import React from 'react';
-import LoginScreen from '../userSection/LoginScreen';
-import UserSection from '../userSection/UserSection';
+
 
 const profile = () => {
 

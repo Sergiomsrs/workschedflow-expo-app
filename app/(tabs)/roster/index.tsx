@@ -3,7 +3,7 @@ import { useAuthStore } from '@/src/auth/store/useAuthStore'
 import RosterMonthView from '@/src/roster/RosterMonthView'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { processTimeStamps } from '../../src/utils/timeManagement'
+import { processTimeStamps } from '@/src/utils/timeManagement'
 
 
 const roster = () => {
