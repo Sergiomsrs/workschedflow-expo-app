@@ -27,17 +27,10 @@ export const authLogin = async (dni: string, password: string) => {
     }
 }
 
-export const getMe = async (token: string) => {
+export const getMe = async () => {
     try {
 
-        const { data } = await authApi.get<MeResponse>(
-            '/emp/me',
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        );
+        const { data } = await authApi.get<MeResponse>('/emp/me');
 
         return data;
 

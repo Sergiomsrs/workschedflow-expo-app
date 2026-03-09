@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { authLogin, getMe } from "../actions/auth-actions";
 import { MeResponse } from "../interfaces/me.response";
+import { SecureStorageAdapter } from '../helpers/secure-storage.adapter';
 
 
 export type AuthStatus = 'authenticated' | 'unAuthenticatd' | 'checking';
@@ -25,6 +26,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     login: async (dni: string, password: string) => {
 
         const resp = await authLogin(dni, password);
+        await SecureStorageAdapter.setItem('token', resp.token);
 
         if (!resp) {
             set({ status: 'unAuthenticatd', token: undefined, user: undefined })
@@ -32,7 +34,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
         }
 
 
-        const { id, name, lastName, role, secondLastName } = await getMe(resp.token)
+        const { id, name, lastName, role, secondLastName } = await getMe()
 
 
         set({ status: 'authenticated', token: resp.token, user: { id, name, lastName, role, secondLastName } })
@@ -53,16 +55,18 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
         }
 
         try {
-            const user = await getMe(token);
+            const user = await getMe();
             set({ status: 'authenticated', user });
             return true;
         } catch (error) {
             set({ status: 'unAuthenticatd', user: undefined, token: undefined });
+            await SecureStorageAdapter.deleteItem('token');
             return false;
         }
     },
 
     logout: async () => {
         set({ status: 'unAuthenticatd', token: undefined, user: undefined })
+        await SecureStorageAdapter.deleteItem('token');
     },
 }))
