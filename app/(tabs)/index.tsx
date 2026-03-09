@@ -1,4 +1,4 @@
-import { useTimeTrack } from '@/hooks/useTimeTrack';
+import { useTimeTrack } from '@/src/timetrack/hooks/useTimeTrack';
 import { useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';

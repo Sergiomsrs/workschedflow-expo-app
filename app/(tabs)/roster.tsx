@@ -1,4 +1,4 @@
-import { useSchedules } from '@/hooks/useSchedules'
+import { useSchedules } from '@/src/roster/hooks/useSchedules'
 import { useAuthStore } from '@/src/auth/store/useAuthStore'
 import RosterMonthView from '@/src/roster/RosterMonthView'
 import React, { useState } from 'react'
