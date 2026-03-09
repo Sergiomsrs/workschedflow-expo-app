@@ -2,7 +2,7 @@ import RosterMonthView from '@/components/roster/RosterMonthView'
 import { useSchedules } from '@/hooks/useSchedules'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { processTimeStamps } from '../../utils/timeManagement'
+import { processTimeStamps } from '../../src/utils/timeManagement'
 import { useAuthStore } from '@/auth/store/useAuthStore'
 
 
