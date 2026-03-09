@@ -1,12 +1,13 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { HapticTab } from '@/components/haptic-tab';
-import HeaderLayout from '@/components/ui/layoutComponents/HeaderLayout';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useColorScheme } from '@/theme/hooks/use-color-scheme';
 import { useAuthStore } from '@/src/auth/store/useAuthStore';
+import { Colors } from '@/theme/constants/theme';
+import { HapticTab } from '@/theme/haptic-tab';
+
 import { Ionicons } from '@expo/vector-icons';
+import HeaderLayout from '@/theme/ui/layoutComponents/HeaderLayout';
 
 
 export default function TabLayout() {

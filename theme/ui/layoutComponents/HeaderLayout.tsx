@@ -4,7 +4,7 @@ import { ImageBackground, Text, View } from 'react-native'
 const HeaderLayout = () => {
     return (
         <ImageBackground
-            source={require("../../../assets/images/bg-image-loginForm.webp")}
+            source={require("../../assets/images/bg-image-loginForm.webp")}
             resizeMode="cover"
             className="w-full h-48 justify-center"
         >

@@ -1,4 +1,4 @@
-import { schedulesApi } from "@/api/schedulesApi";
+import { schedulesApi } from "@/src/roster/api/schedulesApi";
 import { SchedulesResponse } from "../interfaces/schedules.response";
 
 export const schedulesAction = async (id: number, startDate: string, endDate: string) => {

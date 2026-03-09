@@ -3,7 +3,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useColorScheme } from '@/theme/hooks/use-color-scheme';
 
 import { useAuthStore } from '@/src/auth/store/useAuthStore';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

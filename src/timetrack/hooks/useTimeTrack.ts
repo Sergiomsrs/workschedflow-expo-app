@@ -1,5 +1,5 @@
 
-import { timeTrackApi } from "@/api/timetrack"
+import { timeTrackApi } from "@/src/timetrack/api/timetrack"
 import { FicharPayload } from "@/src/timetrack/interfaces/ficharPayload.interfaces"
 import { useMutation } from "@tanstack/react-query"
 
