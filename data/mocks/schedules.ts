@@ -1,4 +1,4 @@
-import { DailySchedules } from "@/infrastructure/interfaces/processed.record.interface";
+import { DailySchedules } from "@/src/roster/interfaces/processed.record.interface";
 
 export const timestampSchedulesMock: DailySchedules[] = [
     {

@@ -1,4 +1,4 @@
-import { SchedulesResponse } from "@/infrastructure/interfaces/schedules.response";
+import { SchedulesResponse } from "@/src/roster/interfaces/schedules.response";
 
 export const processTimeStamps = (dailySchedules: SchedulesResponse, id: any): any[] => {
     if (!Array.isArray(dailySchedules)) return [];

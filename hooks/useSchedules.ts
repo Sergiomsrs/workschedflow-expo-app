@@ -1,4 +1,4 @@
-import { schedulesAction } from "@/infrastructure/actions/schedules.actions";
+import { schedulesAction } from "@/src/roster/actions/schedules.actions";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 

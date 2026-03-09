@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/auth/store/useAuthStore';
+import { useAuthStore } from '@/src/auth/store/useAuthStore';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 

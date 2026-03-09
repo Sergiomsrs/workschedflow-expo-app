@@ -1,4 +1,4 @@
-import { ProcessedRecord } from '@/infrastructure/interfaces/processed.record.interface';
+import { ProcessedRecord } from '@/src/roster/interfaces/processed.record.interface';
 import React from 'react';
 import { Text, View } from 'react-native';
 

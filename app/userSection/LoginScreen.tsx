@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/auth/store/useAuthStore';
+import { useAuthStore } from '@/src/auth/store/useAuthStore';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";

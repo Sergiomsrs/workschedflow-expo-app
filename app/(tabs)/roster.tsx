@@ -1,9 +1,9 @@
-import RosterMonthView from '@/components/roster/RosterMonthView'
 import { useSchedules } from '@/hooks/useSchedules'
+import { useAuthStore } from '@/src/auth/store/useAuthStore'
+import RosterMonthView from '@/src/roster/RosterMonthView'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { processTimeStamps } from '../../src/utils/timeManagement'
-import { useAuthStore } from '@/auth/store/useAuthStore'
 
 
 const roster = () => {

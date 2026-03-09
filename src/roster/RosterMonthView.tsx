@@ -1,4 +1,4 @@
-import { ProcessedRecord } from '@/infrastructure/interfaces/processed.record.interface'
+import { ProcessedRecord } from '@/src/roster/interfaces/processed.record.interface'
 import { Ionicons } from '@expo/vector-icons'
 import React, { useRef, useState } from 'react'
 import { Animated, Dimensions, RefreshControl, ScrollView as RNScrollView, Text, TouchableOpacity, View } from 'react-native'
